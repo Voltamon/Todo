@@ -1,0 +1,206 @@
+/* todo.css - Modern, dark, compact, and responsive for Pico CSS todo app */
+body {
+  background: #181c20;
+  color: #f3f4f6;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+}
+input, button, select {
+  background: #23272e;
+  color: #f3f4f6;
+}
+input, select {
+  border: 1px solid #444;
+}
+#todo-form button {
+  background: #3b82f6;
+  color: #fff;
+  border: none;
+  border-radius: 0.4em;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+#todo-form button:hover {
+  background: #2563eb;
+}
+.todo-layout {
+  display: flex;
+  align-items: stretch;
+  min-height: 100vh;
+}
+.sidebar {
+  background: #20232a;
+  width: 336px;
+  min-width: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  height: 100vh;
+  max-height: 100vh;
+  overflow-y: auto;
+  border-right: 1px solid #23272e;
+}
+.todo-main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 1rem;
+  background: #181c20;
+  position: relative;
+}
+#schedule-container {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  min-height: 0;
+  margin-bottom: 1em;
+  max-height: calc(100vh - 12em);
+}
+h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+#todo-form label {
+  margin-top: 0.5em;
+  font-size: 1em;
+}
+#todo-form input, #todo-form select, #todo-form textarea {
+  background: #23272e;
+  color: #f3f4f6;
+  border: 1px solid #444;
+  border-radius: 0.4em;
+  margin-bottom: 0.5em;
+}
+#todo-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+.todo-task {
+  display: flex;
+  align-items: flex-start;
+  background: #23272e;
+  border-radius: 0.5em;
+  border-left: 6px solid var(--priority-color, #22c55e);
+  padding: 0.8em 1em;
+  gap: 1em;
+  box-shadow: 0 2px 8px #0002;
+  transition: box-shadow 0.2s;
+  margin-bottom: 0.7em;
+}
+.todo-task:hover {
+  box-shadow: 0 4px 16px #0004;
+}
+.todo-task .task-main {
+  flex: 1;
+  min-width: 0;
+}
+.todo-task .task-title {
+  font-size: 1.1em;
+  font-weight: 600;
+  margin-bottom: 0.2em;
+  word-break: break-word;
+}
+.todo-task .task-desc {
+  font-size: 0.98em;
+  color: #bdbdbd;
+  margin-bottom: 0.2em;
+  word-break: break-word;
+}
+.todo-task .task-meta {
+  font-size: 0.92em;
+  color: #a3a3a3;
+  margin-bottom: 0.2em;
+}
+.todo-task .task-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3em;
+}
+.todo-task .task-actions button {
+  background: none;
+  border: none;
+  color: #f3f4f6;
+  font-size: 1.1em;
+  cursor: pointer;
+  padding: 0.2em 0.4em;
+  border-radius: 0.3em;
+  transition: background 0.15s;
+}
+.todo-task .task-actions button:hover {
+  background: #23272e;
+  color: #3b82f6;
+}
+.priority-red { --priority-color: #ef4444; }
+.priority-yellow { --priority-color: #facc15; }
+.priority-green { --priority-color: #22c55e; }
+#date-nav {
+  margin-top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  position: sticky;
+  bottom: 0;
+  background: #181c20;
+  z-index: 10;
+  padding: 0.7em 0 0.2em 0;
+}
+#date-nav button {
+  background: #23272e;
+  color: #f3f4f6;
+  border: 1px solid #444;
+  border-radius: 0.4em;
+  padding: 0.3em 1em;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+#date-nav button:hover {
+  background: #3b82f6;
+  color: #fff;
+}
+#greeting-quote {
+  font-size: 1.1em;
+  margin-bottom: 0.2em;
+  color: #facc15;
+  text-align: left;
+}
+#progress-bar-container {
+  min-width: 180px;
+  max-width: 220px;
+  width: 30vw;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-left: 2em;
+}
+#progress-bar {
+  width: 100%;
+  height: 1.1em;
+  background: #23272e;
+}
+#progress-bar-label {
+  font-size: 0.98em;
+  color: #8b949e;
+  margin-right: 0.7em;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  height: 1.1em;
+}
+@media (max-width: 900px) {
+  .sidebar { width: 100%; max-height: none; height: auto; }
+  .todo-layout { flex-direction: column; }
+}
+@media (max-width: 600px) {
+  .todo-main-content { padding: 0.5rem; }
+  .sidebar { padding: 0.5rem; }
+  .todo-task { padding: 0.6em 0.7em; }
+  #progress-bar-container { min-width: 100px; max-width: 100vw; margin-left: 1em; }
+}
