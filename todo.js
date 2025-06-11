@@ -1,31 +1,38 @@
 // ===================== TODO APP JAVASCRIPT =====================
+
 // Utility functions
 function getToday() {
     const d = new Date();
     d.setHours(0,0,0,0);
     return d.toISOString().slice(0,10);
 }
+
 function saveTasks(tasks) {
     localStorage.setItem('todo-tasks', JSON.stringify(tasks));
 }
+
 function loadTasks() {
     return JSON.parse(localStorage.getItem('todo-tasks') || '{}');
 }
+
 function getTasksForDate(date) {
     const all = loadTasks();
     return all[date] || [];
 }
+
 function setTasksForDate(date, tasks) {
     const all = loadTasks();
     all[date] = tasks;
     saveTasks(all);
 }
+
 function getGreeting() {
     const hour = new Date().getHours();
     if (hour < 12) return 'Good morning';
     if (hour < 18) return 'Good afternoon';
     return 'Good evening';
 }
+
 function getQuote() {
     const quotes = [
         "The secret of getting ahead is getting started.",
@@ -82,6 +89,7 @@ let timerTaskIndex = null;
 function renderGreeting() {
     greetingQuote.innerHTML = `<div style='font-size:1.2em;font-weight:600;'>${getGreeting()}!</div><div style='font-size:1em;margin-top:0.2em;'>${getQuote()}</div>`;
 }
+
 function renderProgressBar(tasks) {
     if (!tasks.length) {
         progressBar.value = 0;
@@ -92,17 +100,21 @@ function renderProgressBar(tasks) {
     progressBar.value = Math.round((done / tasks.length) * 100);
     progressBar.max = 100;
 }
+
 function renderTasks() {
     const tasks = getTasksForDate(currentDate);
     schedule.innerHTML = '';
+
     if (!tasks.length) {
         schedule.innerHTML = `<div style='color:#8b949e;text-align:center;margin-top:2em;'>No tasks for this day.</div>`;
         renderProgressBar([]);
         return;
     }
+
     // Sort by user order (drag-and-drop), then by priority
     tasks.sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
     renderProgressBar(tasks);
+
     for (let i = 0; i < tasks.length; ++i) {
         const t = tasks[i];
         const div = document.createElement('div');
@@ -128,6 +140,7 @@ function renderTasks() {
                 <svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='#ef4444' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='3 6 5 6 21 6'/><path d='M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2'/><line x1='10' y1='11' x2='10' y2='17'/><line x1='14' y1='11' x2='14' y2='17'/></svg>
             </button>
         `;
+
         // Drag events
         div.addEventListener('dragstart', e => {
             e.dataTransfer.setData('text/plain', i);
@@ -150,8 +163,10 @@ function renderTasks() {
             setTasksForDate(currentDate, arr);
             renderTasks();
         });
+
         // Delete
         div.querySelector('.delete-task').onclick = () => confirmDeleteTask(i);
+
         // Mark done on double click (only if not done)
         if (!t.done) {
             div.ondblclick = () => openTaskModal(i);
@@ -159,6 +174,7 @@ function renderTasks() {
             div.style.opacity = 0.7;
             div.style.pointerEvents = 'auto'; // allow delete
         }
+
         schedule.appendChild(div);
     }
 }
@@ -166,14 +182,17 @@ function renderTasks() {
 // ========== FORM HANDLING ==========
 input.maxLength = 25;
 desc.maxLength = 100;
+
 input.addEventListener('input', () => {
     inputCounter.textContent = `${input.value.length}/25`;
     if (input.value.length > 25) input.value = input.value.slice(0, 25);
 });
+
 desc.addEventListener('input', () => {
     descCounter.textContent = `${desc.value.length}/100`;
     if (desc.value.length > 100) desc.value = desc.value.slice(0, 100);
 });
+
 form.onsubmit = e => {
     e.preventDefault();
     const name = input.value.trim();
@@ -216,12 +235,14 @@ function renderDateNav() {
     dateLabel.style.margin = '0 1.2em';
     dateNav.append(prev, dateLabel, next);
 }
+
 function changeDate(delta) {
     const d = new Date(currentDate);
     d.setDate(d.getDate() + delta);
     currentDate = d.toISOString().slice(0,10);
     updateAll();
 }
+
 dateInput.value = getToday();
 
 // ========== MODAL HANDLING ==========
@@ -236,6 +257,7 @@ function openTaskModal(idx) {
     updateModalTimer();
     modal.style.display = 'flex';
 }
+
 function closeTaskModal() {
     // Save timerRemaining to the task before closing
     if (timerTaskIndex !== null) {
@@ -249,12 +271,15 @@ function closeTaskModal() {
     clearInterval(timerInterval);
     timerInterval = null;
 }
+
 function updateModalTimer() {
     const min = Math.floor(timerRemaining / 60).toString().padStart(2, '0');
     const sec = (timerRemaining % 60).toString().padStart(2, '0');
     modalTimer.textContent = `${min}:${sec}`;
 }
+
 modalClose.onclick = closeTaskModal;
+
 modalStart.onclick = () => {
     if (timerInterval) return;
     timerInterval = setInterval(() => {
@@ -269,14 +294,17 @@ modalStart.onclick = () => {
         }
     }, 1000);
 };
+
 modalPause.onclick = () => {
     clearInterval(timerInterval);
     timerInterval = null;
 };
+
 modalDone.onclick = () => {
     markTaskDone(timerTaskIndex);
     closeTaskModal();
 };
+
 function markTaskDone(idx) {
     const tasks = getTasksForDate(currentDate);
     if (tasks[idx]) {
@@ -287,6 +315,7 @@ function markTaskDone(idx) {
     renderTasks();
     renderProgressBar(tasks);
 }
+
 window.onclick = function(e) {
     if (e.target === modal) closeTaskModal();
 };
@@ -321,6 +350,7 @@ function confirmDeleteTask(idx) {
     } else {
         modal.style.display = 'flex';
     }
+
     // Button handlers
     document.getElementById('delete-confirm-yes').onclick = function() {
         const tasks = getTasksForDate(currentDate);
@@ -330,9 +360,11 @@ function confirmDeleteTask(idx) {
         renderProgressBar(tasks);
         modal.style.display = 'none';
     };
+
     document.getElementById('delete-confirm-no').onclick = function() {
         modal.style.display = 'none';
     };
+
     // Dismiss modal on outside click
     modal.onclick = function(e) {
         if (e.target === modal) modal.style.display = 'none';
@@ -345,4 +377,5 @@ function updateAll() {
     renderTasks();
     renderDateNav();
 }
+
 updateAll();
