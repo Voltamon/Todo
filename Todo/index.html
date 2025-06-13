@@ -10,45 +10,54 @@
 </head>
 <body>
     <div class="todo-layout">
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-header">
-                <h2 style="margin-bottom:0;">Add Task</h2>
-                <button class="close-btn" id="close-sidebar">&times;</button>
-            </div>
+        <aside class="sidebar">
+            <h2>Add Task</h2>
             <form id="todo-form">
                 <div style="display:flex;justify-content:space-between;align-items:center;">
-                  <label for="todo-input">Task Name</label>
+                  <label for="todo-input" style="color:#a78bfa;font-weight:700;">Task Name</label>
                   <span id="todo-input-counter" style="font-size:0.95em;color:#8b949e;text-align:right;"></span>
                 </div>
+<<<<<<< HEAD:todo/index.html
+                <input type="text" id="todo-input" placeholder="Add a new task" required style="font-size:0.5em;" onfocus="this.style.fontSize='1em'" onblur="this.style.fontSize='0.5em'">
+=======
                 <input type="text" id="todo-input" placeholder="Add a new task" required>
+
                 <div style="display:flex;justify-content:space-between;align-items:center;">
-                  <label for="todo-desc">Task Description</label>
+                  <label for="todo-desc" style="color:#a78bfa;font-weight:700;">Task Description</label>
                   <span id="todo-desc-counter" style="font-size:0.95em;color:#8b949e;text-align:right;"></span>
                 </div>
+<<<<<<< HEAD:todo/index.html
+                <textarea id="todo-desc" placeholder="Task description (optional)" style="width:100%;min-height:5em;max-height:10em;resize:vertical;font-size:0.5em;" onfocus="this.style.fontSize='1em'" onblur="this.style.fontSize='0.5em'"></textarea>
+                <label for="todo-priority" style="color:#a78bfa;font-weight:700;">Priority</label>
+=======
                 <textarea id="todo-desc" placeholder="Task description (optional)" style="width:100%;min-height:5em;max-height:10em;resize:vertical;"></textarea>
                 <label for="todo-priority">Priority</label>
+>>>>>>> b9ed343a4f21538a92e9b1a0e1ec720e416bbb84:index.html
                 <select id="todo-priority" required style="width: 100%;">
                     <option value="red" title="Urgent" style="background:#ef4444;">&#11044; Urgent</option>
                     <option value="yellow" title="Medium" style="background:#facc15;">&#11044; Medium</option>
                     <option value="green" title="Low" style="background:#22c55e;">&#11044; Low</option>
                 </select>
                 <div style="display:flex;flex-direction:column;gap:0.5em;">
+<<<<<<< HEAD:todo/index.html
+                  <label for="todo-duration" style="color:#a78bfa;font-weight:700;">Task Duration</label>
+                  <input type="number" id="todo-duration" min="1" max="30" step="1" placeholder="e.g. 15" style="width:100%;box-sizing:border-box;font-size:0.5em;" onfocus="this.style.fontSize='1em'" onblur="this.style.fontSize='0.5em'">
+                  <label for="todo-date" style="color:#a78bfa;font-weight:700;">Task Date</label>
+=======
                   <label for="todo-duration">Task Duration</label>
                   <input type="number" id="todo-duration" min="1" max="30" step="1" placeholder="e.g. 15" style="width:100%;box-sizing:border-box;">
                   <label for="todo-date">Task Date</label>
+>>>>>>> b9ed343a4f21538a92e9b1a0e1ec720e416bbb84:index.html
                   <input type="date" id="todo-date" style="width:100%;box-sizing:border-box;">
                 </div>
                 <button type="submit" style="width:100%;margin-top:1.2rem;">Add</button>
             </form>
         </aside>
         <div class="todo-main-content" style="flex:1;display:flex;flex-direction:column;min-width:0;padding:1rem;">
-            <div class="main-header-row">
+            <div style="display:flex;justify-content:space-between;align-items:flex-end;width:100%;margin-bottom:0.5em;">
                 <div id="greeting-quote" style="text-align:left;color:#fff;"></div>
-                <div class="main-header-actions">
-                    <button class="add-task-btn" id="open-sidebar" title="Add Task">+ Add Task</button>
-                    <div id="progress-bar-container">
-                        <progress id="progress-bar" value="0" max="100" style="width:100%;height:1.1em;background:#23272e;"></progress>
-                    </div>
+                <div id="progress-bar-container" style="position:relative;min-width:180px;max-width:220px;width:30vw;display:flex;flex-direction:column;align-items:flex-end;justify-content:flex-end;margin-left:2em;">
+                    <progress id="progress-bar" value="0" max="100" style="width:100%;height:1.1em;background:#23272e;"></progress>
                 </div>
             </div>
             <div id="schedule-container"></div>
