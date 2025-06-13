@@ -379,3 +379,24 @@ function updateAll() {
 }
 
 updateAll();
+
+    // Sidebar open/close logic
+    const sidebar = document.getElementById('sidebar');
+    const openBtn = document.getElementById('open-sidebar');
+    const closeBtn = document.getElementById('close-sidebar');
+    function openSidebar() {
+        sidebar.classList.add('open');
+    }
+    function closeSidebar() {
+        sidebar.classList.remove('open');
+    }
+    openBtn.addEventListener('click', openSidebar);
+    closeBtn.addEventListener('click', closeSidebar);
+    document.getElementById('todo-form').addEventListener('submit', function() {
+        closeSidebar();
+    });
+    document.addEventListener('click', function(e) {
+        if (sidebar.classList.contains('open') && !sidebar.contains(e.target) && e.target !== openBtn) {
+            closeSidebar();
+        }
+    });

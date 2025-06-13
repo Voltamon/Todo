@@ -6,106 +6,55 @@
     <title>Todo App</title>
     <meta name="color-scheme" content="dark">
     <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
-    <link rel="stylesheet" href="todo.css">
-    <style>
-        body { background: #181c20; color: #f3f4f6; }
-        input, button, select { background: #23272e; color: #f3f4f6; }
-        input, select { border: 1px solid #444; }
-        #todo-form button { background: #3b82f6; color: #fff; }
-        #todo-form button:hover { background: #2563eb; }
-
-        .todo-layout { display: flex; align-items: stretch; }
-
-        .sidebar {
-            padding: 1rem;
-            background: #20232a;
-            width: 320px;
-            min-width: 0;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            max-height: 100vh;
-            overflow-y: auto;
-        }
-
-        .todo-main-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            min-width: 0;
-            padding: 1rem;
-        }
-
-        h2 { font-size: 1.5rem; margin-bottom: 1rem; }
-
-        textarea#todo-desc {
-            min-height: 5em;
-            max-height: 10em;
-            resize: vertical;
-        }
-
-        @media (max-width: 768px) {
-            .todo-layout { flex-direction: column; }
-            .sidebar {
-                width: 100%;
-                height: auto;
-                max-height: none;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="src/todo.css">
 </head>
-
 <body>
     <div class="todo-layout">
-        <aside class="sidebar">
-            <h2>Add Task</h2>
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2 style="margin-bottom:0;">Add Task</h2>
+                <button class="close-btn" id="close-sidebar">&times;</button>
+            </div>
             <form id="todo-form">
                 <div style="display:flex;justify-content:space-between;align-items:center;">
                   <label for="todo-input">Task Name</label>
                   <span id="todo-input-counter" style="font-size:0.95em;color:#8b949e;text-align:right;"></span>
                 </div>
                 <input type="text" id="todo-input" placeholder="Add a new task" required>
-
                 <div style="display:flex;justify-content:space-between;align-items:center;">
                   <label for="todo-desc">Task Description</label>
                   <span id="todo-desc-counter" style="font-size:0.95em;color:#8b949e;text-align:right;"></span>
                 </div>
                 <textarea id="todo-desc" placeholder="Task description (optional)" style="width:100%;min-height:5em;max-height:10em;resize:vertical;"></textarea>
-
                 <label for="todo-priority">Priority</label>
                 <select id="todo-priority" required style="width: 100%;">
                     <option value="red" title="Urgent" style="background:#ef4444;">&#11044; Urgent</option>
                     <option value="yellow" title="Medium" style="background:#facc15;">&#11044; Medium</option>
                     <option value="green" title="Low" style="background:#22c55e;">&#11044; Low</option>
                 </select>
-
                 <div style="display:flex;flex-direction:column;gap:0.5em;">
                   <label for="todo-duration">Task Duration</label>
                   <input type="number" id="todo-duration" min="1" max="30" step="1" placeholder="e.g. 15" style="width:100%;box-sizing:border-box;">
-
                   <label for="todo-date">Task Date</label>
                   <input type="date" id="todo-date" style="width:100%;box-sizing:border-box;">
                 </div>
-
                 <button type="submit" style="width:100%;margin-top:1.2rem;">Add</button>
             </form>
         </aside>
-
         <div class="todo-main-content" style="flex:1;display:flex;flex-direction:column;min-width:0;padding:1rem;">
-            <div style="display:flex;justify-content:space-between;align-items:flex-end;width:100%;margin-bottom:0.5em;">
+            <div class="main-header-row">
                 <div id="greeting-quote" style="text-align:left;color:#fff;"></div>
-                <div id="progress-bar-container" style="position:relative;min-width:180px;max-width:220px;width:30vw;display:flex;flex-direction:column;align-items:flex-end;justify-content:flex-end;margin-left:2em;">
-                    <progress id="progress-bar" value="0" max="100" style="width:100%;height:1.1em;background:#23272e;"></progress>
+                <div class="main-header-actions">
+                    <button class="add-task-btn" id="open-sidebar" title="Add Task">+ Add Task</button>
+                    <div id="progress-bar-container">
+                        <progress id="progress-bar" value="0" max="100" style="width:100%;height:1.1em;background:#23272e;"></progress>
+                    </div>
                 </div>
             </div>
-
             <div id="schedule-container"></div>
-
             <div id="date-nav" style="margin-top:0.5em;display:flex;justify-content:center;align-items:center;width:100%;"></div>
         </div> <!-- close .todo-main-content -->
     </div> <!-- close .todo-layout -->
-
     <!-- Modal for task details and timer -->
     <div id="task-modal" style="display:none;position:fixed;z-index:1000;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,0.7);justify-content:center;align-items:center;">
       <div id="task-modal-content" style="background:#23272e;padding:2rem 2.5rem;border-radius:1rem;box-shadow:0 4px 32px #000a;min-width:420px;max-width:98vw;display:flex;flex-direction:column;align-items:center;position:relative;">
@@ -120,7 +69,6 @@
         </div>
       </div>
     </div>
-
-    <script src="todo.js"></script>
+    <script src="src/todo.js"></script>
 </body>
 </html>
