@@ -131,12 +131,12 @@ function renderTasks() {
         div.style.cursor = 'grab';
         div.dataset.index = i;
         div.innerHTML = `
-            <span style="flex:1;font-weight:500;color:${t.done ? '#22c55e' : '#fff'};display:flex;align-items:center;gap:0.5em;font-size:0.85em;">
-                ${t.done ? '<span style=\'color:#22c55e;font-size:1.1em;\'>&#10003;</span>' : ''}
+            <span style="flex:1;font-weight:500;color:${t.done ? '#22c55e' : '#fff'};display:flex;align-items:center;gap:0.5em;">
+                ${t.done ? '<span style=\'color:#22c55e;font-size:1.2em;\'>&#10003;</span>' : ''}
                 ${t.name}
             </span>
-            <span style="font-size:0.7em;color:#8b949e;margin-right:1.2em;">${t.duration} min</span>
-            <button class="delete-task" data-index="${i}" title="Delete" style="background:none;color:#ef4444;border:none;padding:0.1em 0.2em;border-radius:0.3em;cursor:pointer;margin-left:0.2em;font-size:0.5em;display:flex;align-items:center;justify-content:center;opacity:0.7;transition:opacity 0.15s;">
+            <span style="font-size:0.95em;color:#8b949e;margin-right:1.2em;">${t.duration} min</span>
+            <button class="delete-task" data-index="${i}" title="Delete" style="background:none;color:#ef4444;border:none;padding:0.2em 0.4em;border-radius:0.4em;cursor:pointer;margin-left:0.4em;font-size:1em;display:flex;align-items:center;justify-content:center;opacity:0.7;transition:opacity 0.15s;">
                 <svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24' fill='none' stroke='#ef4444' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='3 6 5 6 21 6'/><path d='M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2'/><line x1='10' y1='11' x2='10' y2='17'/><line x1='14' y1='11' x2='14' y2='17'/></svg>
             </button>
         `;
@@ -176,16 +176,6 @@ function renderTasks() {
         }
 
         schedule.appendChild(div);
-        if (t.description) {
-            const descDiv = document.createElement('div');
-            descDiv.textContent = t.description;
-            descDiv.style.color = '#bfc7d5';
-            descDiv.style.fontSize = '0.46em';
-            descDiv.style.marginLeft = '2.1em';
-            descDiv.style.marginTop = '0.09em';
-            descDiv.style.marginBottom = '-0.15em';
-            schedule.appendChild(descDiv);
-        }
     }
 }
 
@@ -390,23 +380,23 @@ function updateAll() {
 
 updateAll();
 
-    // Sidebar open/close logic
-    const sidebar = document.getElementById('sidebar');
-    const openBtn = document.getElementById('open-sidebar');
-    const closeBtn = document.getElementById('close-sidebar');
-    function openSidebar() {
-        sidebar.classList.add('open');
-    }
-    function closeSidebar() {
-        sidebar.classList.remove('open');
-    }
-    openBtn.addEventListener('click', openSidebar);
-    closeBtn.addEventListener('click', closeSidebar);
-    document.getElementById('todo-form').addEventListener('submit', function() {
+// Sidebar open/close logic
+const sidebar = document.getElementById('sidebar');
+const openBtn = document.getElementById('open-sidebar');
+const closeBtn = document.getElementById('close-sidebar');
+function openSidebar() {
+    sidebar.classList.add('open');
+}
+function closeSidebar() {
+    sidebar.classList.remove('open');
+}
+openBtn.addEventListener('click', openSidebar);
+closeBtn.addEventListener('click', closeSidebar);
+document.getElementById('todo-form').addEventListener('submit', function() {
+    closeSidebar();
+});
+document.addEventListener('click', function(e) {
+    if (sidebar.classList.contains('open') && !sidebar.contains(e.target) && e.target !== openBtn) {
         closeSidebar();
-    });
-    document.addEventListener('click', function(e) {
-        if (sidebar.classList.contains('open') && !sidebar.contains(e.target) && e.target !== openBtn) {
-            closeSidebar();
-        }
-    });
+    }
+});
